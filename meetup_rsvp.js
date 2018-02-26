@@ -30,8 +30,7 @@ server.listen(80);
 			method: 'GET'
 			}, function(err, response, data) {
 				setupMyHostEvents(data, token, res);
-			}
-		});
+			});
   }
   function setupMyHostEvents(mdata, token, res) {
 		console.log("setupMyHostEvents");
@@ -42,7 +41,7 @@ server.listen(80);
 			uri: aeurl,
 			method: 'GET'
 			}, function(err, response, data) { getEventsByHosted(m_id, data, token, res); }
-		});
+		);
 	}
 	function HtmlEncode(s)
 	{
@@ -70,8 +69,7 @@ server.listen(80);
 							', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }' +
 						'}';
 					}
-				}
-			});
+				});
 		});
 		rtn_data = rtn_data + '}';
 		res.end(rtn_data);

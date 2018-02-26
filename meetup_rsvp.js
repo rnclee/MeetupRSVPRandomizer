@@ -11,7 +11,7 @@ var server = http.createServer(function(req, res) {
 		} else {
 			resp.writeHead(200, { 'Content-Type': 'text/html' });
 			resp.write(pgResp);
-		}
+		});
 		 
 		resp.end();
   } else if (req.method === 'POST' && req.url === '/getEvents') {

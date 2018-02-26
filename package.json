@@ -11,7 +11,7 @@
   "dependencies": {
     "eyes": "^0.1.8",
     "request": "^2.83.0"
-  }
+  },
   "scripts": {
 	  "start": "node rsvpRandomizer.js"
 	},

@@ -3,7 +3,18 @@ var http = require('http'),
     request = require('request');
 
 var server = http.createServer(function(req, res) {
-  if (req.method === 'POST' && req.url === '/getEvents') {
+  if (req.url === '/login') {
+	  fs.readFile("./login.html", function (error, pgResp) {
+		if (error) {
+			resp.writeHead(404);
+			resp.write('Contents you are looking are Not Found');
+		} else {
+			resp.writeHead(200, { 'Content-Type': 'text/html' });
+			resp.write(pgResp);
+		}
+		 
+		resp.end();
+  } else if (req.method === 'POST' && req.url === '/getEvents') {
     var body = '';
     req.on('data', function(chunk) {
       body += chunk;

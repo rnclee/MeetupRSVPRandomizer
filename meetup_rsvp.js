@@ -31,7 +31,7 @@ var server = http.createServer(function(req, res) {
   }
 });
 
-server.listen(18080);
+server.listen(8081);
 
 
 	function loadHostEvents(token, res)

@@ -3,6 +3,7 @@ var http = require('http'),
     request = require('request');
 
 var server = http.createServer(function(req, res) {
+	
   if (req.url === '/login') {
 	  fs.readFile("./login.html", function (error, pgResp) {
 		if (error) {
@@ -30,7 +31,7 @@ var server = http.createServer(function(req, res) {
   }
 });
 
-server.listen(8080);
+server.listen(80);
 
 
 	function loadHostEvents(token, res)

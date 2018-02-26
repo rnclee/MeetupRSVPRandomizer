@@ -9,7 +9,7 @@
     "request": "^2.83.0"
   },
   "scripts": {
-	  "start": "node rsvpRandomizer.js"
+	  "start": "node meetup_rsvp.js"
 	},
 	"main": "rsvpRandomizer.js"
 }

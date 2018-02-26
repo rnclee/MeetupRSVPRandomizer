@@ -1,0 +1,26 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/index.css">
+<title>Meetup RSVP Randomizer</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+	<div class="main-area">
+		<div class="header">
+			<h1>Randomizer</h1>
+			<h3>Randomly choose your participants</h3>
+		</div>
+
+		<div class="content">
+			<input type="button" id="startBtn" onclick="window.open('https://secure.meetup.com/oauth2/authorize?'+
+        'scope=rsvp&'+
+        'client_id=md5j9q4rl731kij9iq42p0glan&'+
+        'response_type=token&'+
+        'redirect_uri=http://meetup.epizy.com/index2.html');" value="Start">
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

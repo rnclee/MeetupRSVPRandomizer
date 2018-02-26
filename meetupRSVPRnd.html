@@ -1,0 +1,56 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/index.css">
+<title>Meetup RSVP Randomizer</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+<script>
+	function getEventsByHosted(m_id, aedata) {
+		$.ajax({
+			url: "https://api.meetup.com/"+uname+"/events/"+e_id+"/hosts?access_token="+$('#Token').val(),
+			method: 'GET',
+			dataType: "html",
+			success: function (data) {
+				var ae = JSON.parse(aedata);
+				ae.forEach(function(event) {
+					var e_id=event.id;
+					var ename=event.name;
+					var uname=event.group.urlname;
+					$('#listEvent').append("<input id=\"eid_"+e_id+"\" type=\"button\" onclick=\"selectEvent('" + e_id + "','" + uname + "','" + encodeURI(ename) + "')\" value=\"" + ename + "\"><br>");
+				});
+			}
+		});
+	}
+</script>
+<div class="container">
+	<div class="main-area">
+		<div class="header">
+			<!-- STEP 1 -->
+			<div style="display: none" id="eventDiv">
+				<span class="label">Select the meetup you want to use randomize RSVP on:</span>
+				<div id="listEvent">
+				</div>
+				<input type="hidden" id="e_id">
+				<input type="hidden" id="uname">
+			</div>
+			<br>
+
+			<div id="eventName"></div>
+			<input type="hidden" id="Token"></input>
+
+			<!-- STEP 2 -->
+			<div style="display: none" id="cnt">
+				<span class="label">Meetup RSVP Count: </span>
+				<input type="text" id="rcnt"></input>
+				<input type="button" id="rnd" onclick="getRSVPS()" value="Randomize RSVPs">
+			</div>
+
+			<div id="viewEvent">
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

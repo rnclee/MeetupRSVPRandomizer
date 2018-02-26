@@ -1,5 +1,6 @@
 var http = require('http'),
-    qs = require('querystring');
+    qs = require('querystring'),
+    request = require('request');
 
 var server = http.createServer(function(req, res) {
   if (req.method === 'POST' && req.url === '/getEvents') {
@@ -9,7 +10,6 @@ var server = http.createServer(function(req, res) {
     });
     req.on('end', function() {
       var data = qs.parse(body);
-      // now you can access `data.email` and `data.password`
       res.writeHead(200);
 	  loadHostEvents(data.token, res);
     });
@@ -25,11 +25,10 @@ server.listen(80);
 	function loadHostEvents(token, res)
 	{
 		var murl = "https://api.meetup.com/members/self?access_token="+token;
-		$.ajax({
-			url: murl,
-			method: 'GET',
-			dataType: "html",
-			success: function(data) {
+		request({
+			uri: murl,
+			method: 'GET'
+			}, function(err, response, data) {
 				setupMyHostEvents(data, token, res);
 			}
 		});
@@ -39,11 +38,10 @@ server.listen(80);
 		var m = JSON.parse(mdata);
 		var m_id = m.id;
 		var aeurl = "https://api.meetup.com/self/events?status=upcoming&only=id,name,group.urlname&access_token="+token;
-		$.ajax({
-			url: aeurl,
-			method: 'GET',
-			dataType: "html",
-			success: function (data) { getEventsByHosted(m_id, data, token, res); }
+		request({
+			uri: aeurl,
+			method: 'GET'
+			}, function(err, response, data) { getEventsByHosted(m_id, data, token, res); }
 		});
 	}
 	function HtmlEncode(s)
@@ -58,11 +56,10 @@ server.listen(80);
 			var e_id=event.id;
 			var ename=event.name;
 			var uname=event.group.urlname;
-			$.ajax({
-				url: "https://api.meetup.com/"+uname+"/events/"+e_id+"/hosts?access_token="+token,
+			request({
+				uri: "https://api.meetup.com/"+uname+"/events/"+e_id+"/hosts?access_token="+token,
 				method: 'GET',
-				dataType: "html",
-				success: function (data) {
+				}, function(err, response, data) {
 					if(isEventHost(m_id, data))
 					{
 						if rtn_data != '{' {

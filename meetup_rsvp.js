@@ -9,14 +9,12 @@ var server = http.createServer(function(req, res) {
   if (req.url === '/login') {
 	  fs.readFile("./login.html", function (error, pgResp) {
 		if (error) {
-			resp.writeHead(404);
-			resp.write('Contents you are looking are Not Found');
+			throw err; 
 		} else {
 			resp.writeHead(200, { 'Content-Type': 'text/html' });
 			resp.write(pgResp);
+			resp.end();
 		}});
-		 
-		resp.end();
   } else if (req.method === 'POST' && req.url === '/getEvents') {
     var body = '';
     req.on('data', function(chunk) {
@@ -31,9 +29,7 @@ var server = http.createServer(function(req, res) {
     res.writeHead(404);
     res.end();
   }
-});
-
-server.listen(server_port, server_ip_address, function () {
+}).listen(server_port, server_ip_address, function () {
   console.log( "Listening on " + server_ip_address + ", port " + server_port )
 });
 

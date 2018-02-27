@@ -33,7 +33,7 @@ var server = http.createServer(function(req, res) {
 	if (error) {
 		throw error; 
 	} else {
-		console.log(req.url);
+		console.log(req);
 		if (/access_token=([^&]+)/.test(req.url))
 		{
 			var token = req.url.match(/access_token=([^&]+)/);

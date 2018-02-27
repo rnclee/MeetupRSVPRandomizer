@@ -38,8 +38,8 @@ var server = http.createServer(function(req, res) {
 			var token = req.url.match(/access_token=([^&]+)/);
 			res.writeHead(200, { 'Content-Type': 'text/html' });
 			loadHostEvents(token[1], function (pgResp, js) { 
-				pgResp.replace("\/\*eos\*\/", "$(document).ready(function () {" + js + "});")
-				this.res.write(pgResp);
+				var script = pgResp.replace("var eos;", "$(document).ready(function () {" + js + "});")
+				this.res.write(script);
 				this.res.end();
 			});
 		}

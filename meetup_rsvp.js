@@ -33,11 +33,10 @@ var server = http.createServer(function(req, res) {
 	if (error) {
 		throw error; 
 	} else {
+		console.log(req.url);
 		if (/access_token=([^&]+)/.test(req.url))
 		{
 			var token = req.url.match(/access_token=([^&]+)/);
-			console.log(req.url);
-			console.log(token);
 			res.writeHead(200, { 'Content-Type': 'text/html' });
 			loadHostEvents(token[1], function (pgResp, js) { 
 				var script = pgResp.replace("//eos", "$(document).ready(function () {" + js + "});")

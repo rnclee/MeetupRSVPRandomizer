@@ -29,7 +29,9 @@ var server = http.createServer(function(req, res) {
     res.writeHead(404);
     res.end();
   }
-}).listen(server_port, server_ip_address, function () {
+});
+
+server.listen(server_port, server_ip_address, function () {
   console.log( "Listening on " + server_ip_address + ", port " + server_port )
 });
 

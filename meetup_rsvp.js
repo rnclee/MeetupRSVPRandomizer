@@ -17,6 +17,15 @@ var server = http.createServer(function(req, res) {
 		res.write(pgResp);
 		res.end();
 	}});
+  } else if (req.url.endsWith('.js')) {
+	fs.readFile('.'+req.url, function (error, pgResp) {
+	if (error) {
+		throw error; 
+	} else {
+		res.writeHead(200, { 'Content-Type': 'text/javascript' });
+		res.write(pgResp);
+		res.end();
+	}});
   } else if (req.method === 'POST' && req.url === '/getEvents') {
 
   } else {
@@ -29,7 +38,7 @@ var server = http.createServer(function(req, res) {
 			var token = req.url.match(/access_token=([^&]+)/);
 			res.writeHead(200, { 'Content-Type': 'text/html' });
 			loadHostEvents(token[1], function (pgResp, js) { 
-				pgResp.replace("/*eos*/", "$(document).ready(function () {" + js + "});")
+				pgResp.replace("\/\*eos\*\/", "$(document).ready(function () {" + js + "});")
 				this.res.write(pgResp);
 				this.res.end();
 			});

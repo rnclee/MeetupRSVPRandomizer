@@ -30,13 +30,12 @@ var server = http.createServer(function(req, res) {
 		});
 		req.on('end', function() {
 		  var data = qs.parse(body);
-		  res.writeHead(200);
+		  res.writeHead(200, { 'Content-Type': 'text/html' });
+		  loadHostEvents(data.token, function (pgResp, js) { pgResp.replace("/*eos*/", "$(document).ready(function () {" + js + "});") });
+		  res.write(pgResp);
+		  res.end();
 		});	
-		res.writeHead(200, { 'Content-Type': 'text/html' });
 		
-		loadHostEvents(data.token, function (pgResp, js) { pgResp.replace("/*eos*/", "$(document).ready(function () {" + js + "});") });
-		res.write(pgResp);
-		res.end();
 	}});
   }
 });

@@ -18,19 +18,20 @@ var server = http.createServer(function(req, res) {
 		res.end();
 	}});
   } else if (req.method === 'POST' && req.url === '/getEvents') {
-    var body = '';
-    req.on('data', function(chunk) {
-      body += chunk;
-    });
-    req.on('end', function() {
-      var data = qs.parse(body);
-      res.writeHead(200);
-    });
+
   } else {
 	fs.readFile('.'+req.url+'.html', function (error, pgResp) {
 	if (error) {
 		throw error; 
 	} else {
+	    var body = '';
+		req.on('data', function(chunk) {
+		  body += chunk;
+		});
+		req.on('end', function() {
+		  var data = qs.parse(body);
+		  res.writeHead(200);
+		});	
 		res.writeHead(200, { 'Content-Type': 'text/html' });
 		
 		loadHostEvents(data.token, function (pgResp, js) { pgResp.replace("/*eos*/", "$(document).ready(function () {" + js + "});") });

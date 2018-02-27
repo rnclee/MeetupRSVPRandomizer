@@ -11,7 +11,16 @@ var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0'
 	
 var server = http.createServer(function(req, res) {
-  if (req.url === '/login') {
+  if (req.url.endsWith('.css') {
+		fs.readFile(req.url function (error, pgResp) {
+		if (error) {
+			throw error; 
+		} else {
+			res.writeHead(200, { 'Content-Type': 'text/css' });
+			res.write(pgResp);
+			res.end();
+		}});
+  } else if (req.url === '/login') ) {
 	  fs.readFile(req.url+".html", function (error, pgResp) {
 		if (error) {
 			throw error; 

@@ -1,15 +1,18 @@
 var http = require('http'),
     qs = require('querystring'),
     request = require('request'),
-	fs = require('fs');
+    express = require('express'),
+	fs = require('fs'),
+	path = require('path');
 
-
+app.use(express.static(path.join(__dirname, 'css')));
+app.use(express.static(path.join(__dirname, 'js')));
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0'
 	
 var server = http.createServer(function(req, res) {
   if (req.url === '/login') {
-	  fs.readFile("./login.html", function (error, pgResp) {
+	  fs.readFile(req.url+".html", function (error, pgResp) {
 		if (error) {
 			throw error; 
 		} else {

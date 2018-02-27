@@ -2,8 +2,10 @@ var http = require('http'),
     qs = require('querystring'),
     request = require('request');
 
-var server = http.createServer(function(req, res) {
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 	
+var server = http.createServer(function(req, res) {
   if (req.url === '/login') {
 	  fs.readFile("./login.html", function (error, pgResp) {
 		if (error) {
@@ -12,7 +14,7 @@ var server = http.createServer(function(req, res) {
 		} else {
 			resp.writeHead(200, { 'Content-Type': 'text/html' });
 			resp.write(pgResp);
-	  }});
+		}
 		 
 		resp.end();
   } else if (req.method === 'POST' && req.url === '/getEvents') {
@@ -31,7 +33,9 @@ var server = http.createServer(function(req, res) {
   }
 });
 
-server.listen(8081);
+server.listen(server_port, server_ip_address, function () {
+  console.log( "Listening on " + server_ip_address + ", port " + server_port )
+});
 
 
 	function loadHostEvents(token, res)

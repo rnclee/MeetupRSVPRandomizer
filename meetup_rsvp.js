@@ -12,7 +12,7 @@ var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0'
 	
 var server = http.createServer(function(req, res) {
   if (req.url.endsWith('.css')) {
-		fs.readFile(req.url function (error, pgResp) {
+		fs.readFile(req.url, function (error, pgResp) {
 		if (error) {
 			throw error; 
 		} else {

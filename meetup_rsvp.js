@@ -6,7 +6,9 @@ var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0'
 	
 var server = http.createServer(function(req, res) {
-console.log(req.url);
+			resp.writeHead(200, { 'Content-Type': 'text/html' });
+			resp.write(req.url);
+			resp.end();
   if (req.url === '/login') {
 	  fs.readFile("./login.html", function (error, pgResp) {
 		if (error) {

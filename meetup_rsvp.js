@@ -1,6 +1,8 @@
 var http = require('http'),
     qs = require('querystring'),
-    request = require('request');
+    request = require('request'),
+	fs = require('fs');
+
 
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0'

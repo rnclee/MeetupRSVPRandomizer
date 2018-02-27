@@ -24,17 +24,12 @@ var server = http.createServer(function(req, res) {
 	if (error) {
 		throw error; 
 	} else {
-	    var body = '';
-		req.on('data', function(chunk) {
-		  body += chunk;
-		});
-		req.on('end', function() {
-		  var data = qs.parse(body);
+
+		var token = /access_token=([^&]+)/.exec(req.url);
 		  res.writeHead(200, { 'Content-Type': 'text/html' });
-		  loadHostEvents(data.token, function (pgResp, js) { pgResp.replace("/*eos*/", "$(document).ready(function () {" + js + "});") });
+		  loadHostEvents(token[0], function (pgResp, js) { pgResp.replace("/*eos*/", "$(document).ready(function () {" + js + "});") });
 		  res.write(pgResp);
 		  res.end();
-		});	
 		
 	}});
   }

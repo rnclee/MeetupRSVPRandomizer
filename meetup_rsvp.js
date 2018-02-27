@@ -20,7 +20,7 @@ var server = http.createServer(function(req, res) {
 			res.write(pgResp);
 			res.end();
 		}});
-  } else if (req.url === '/login') ) {
+  } else if (req.url === '/login') {
 	  fs.readFile(req.url+".html", function (error, pgResp) {
 		if (error) {
 			throw error; 

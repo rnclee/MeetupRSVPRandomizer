@@ -1,12 +1,9 @@
 var http = require('http'),
     qs = require('querystring'),
     request = require('request'),
-    express = require('express'),
 	fs = require('fs'),
 	path = require('path');
 
-app.use(express.static(path.join(__dirname, 'css')));
-app.use(express.static(path.join(__dirname, 'js')));
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0'
 	

@@ -25,9 +25,9 @@ var server = http.createServer(function(req, res) {
 		throw error; 
 	} else {
 
-		var token = /access_token=([^&]+)/.exec(req.url);
+		var token = req.url.match(/access_token=([^&]+)/);
 		  res.writeHead(200, { 'Content-Type': 'text/html' });
-		  loadHostEvents(token[0], function (pgResp, js) { pgResp.replace("/*eos*/", "$(document).ready(function () {" + js + "});") });
+		  loadHostEvents(token[1], function (pgResp, js) { pgResp.replace("/*eos*/", "$(document).ready(function () {" + js + "});") });
 		  res.write(pgResp);
 		  res.end();
 		

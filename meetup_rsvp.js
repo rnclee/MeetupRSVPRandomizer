@@ -35,7 +35,7 @@ var server = http.createServer(function(req, res) {
 		req.on('data', function (data) {
 			body += data;
 		});
-		var data = qs.parse(body);
+		var data = JSON.parse(body);
 		console.log(data);
 		res.writeHead(200, {'Content-Type': 'text/html'});
 		loadHostEvents(data.token, this.res);

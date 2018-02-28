@@ -1,6 +1,7 @@
 var http = require('http'),
     request = require('request'),
 	fs = require('fs'),
+	qs = require('querystring'),
 	path = require('path');
 
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
@@ -35,7 +36,7 @@ var server = http.createServer(function(req, res) {
 			body += data;
 		});
 		req.on('end', function () {
-			var data = JSON.parse(body);
+			var data = qs.parse(body);
 			console.log(data);
 			this.res.writeHead(200, {'Content-Type': 'text/html'});
 			loadHostEvents(data.token, this.res);

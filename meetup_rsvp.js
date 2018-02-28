@@ -31,15 +31,17 @@ var server = http.createServer(function(req, res) {
 		res.writeHead(200, { 'Content-Type': 'text/html' });
 		res.end();
   } else if (req.url === '/getEvents') {
-		let body = [];
-		req.on('data', (chunk) => {
-		  body.push(chunk);
-		}).on('end', () => {
-		  body = Buffer.concat(body).toString();
-		  var data = qs.parse(body);
-		  res.writeHead(200);
-		  loadHostEvents(data.token, this.res);
+		var body = '';
+		req.on('data', function (data) {
+			body += data;
+			console.log("Partial body: " + body);
 		});
+		req.on('end', function () {
+			console.log("Body: " + body);
+		});
+		var data = qs.parse(body);
+		res.writeHead(200, {'Content-Type': 'text/html'});
+		loadHostEvents(data.token, this.res);
   } else {
 	fs.readFile('.'+req.url+'.html', function (error, pgResp) {
 	if (error) {

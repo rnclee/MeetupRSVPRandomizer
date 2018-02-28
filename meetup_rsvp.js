@@ -34,11 +34,12 @@ var server = http.createServer(function(req, res) {
 		req.on('data', function (data) {
 			body += data;
 		});
-		console.log(body);
-		var data = JSON.parse(body);
-		console.log(data);
-		res.writeHead(200, {'Content-Type': 'text/html'});
-		loadHostEvents(data.token, this.res);
+		req.on('end', function () {
+			var data = JSON.parse(body);
+			console.log(data);
+			this.res.writeHead(200, {'Content-Type': 'text/html'});
+			loadHostEvents(data.token, this.res);
+		});
   } else {
 	fs.readFile('.'+req.url+'.html', function (error, pgResp) {
 	if (error) {

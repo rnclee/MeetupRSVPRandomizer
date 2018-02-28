@@ -9,10 +9,13 @@
 <body>
 <script>
 	function getEventsByHosted() {
+		alert(window.location.hash);
+		var tok=/access_token=([^&]+)/.exec(window.location.hash);
+		alert(tok[0]);
 		$.ajax({
 			url: "./getEvents",
 			method: 'POST',
-			data: { token :  /access_token=([^&]+)/.exec(window.location.hash) },
+			data: { token : tok[0]  },
 			dataType: "html",
 			success: function (data) {
 				var ae = JSON.parse(data);

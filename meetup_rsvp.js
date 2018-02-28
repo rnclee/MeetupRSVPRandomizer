@@ -89,12 +89,12 @@ server.listen(server_port, server_ip_address, function () {
 			var ename=event.name;
 			var uname=event.group.urlname;
 			request({
-				uri: "https://api.meetup.com/"+uname+"/events/"+e_id+"/hosts?access_token="+token,
+				uri: "https://api.meetup.com/"+this.uname+"/events/"+this.e_id+"/hosts?access_token="+this.token,
 				method: 'GET',
 				}, function(err, response, data) {
 					if(isEventHost(m_id, data))
 					{
-						if (rtn_data != '{') {
+						if (this.rtn_data != '{') {
 							this.rtn_data = this.rtn_data + ',';
 						}
 						this.rtn_data = this.rtn_data + '{'+

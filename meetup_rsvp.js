@@ -36,9 +36,11 @@ var server = http.createServer(function(req, res) {
       body += chunk;
     });
     req.on('end', function() {
-      var data = qs.parse(body);
+      var data = qs.parse(this.body);
+	  console.log('body='+this.body);
+	  console.log('data='+data);
       res.writeHead(200);
-	  loadHostEvents(data.token, res);
+	  loadHostEvents(data.token, this.res);
     });
   } else {
 	fs.readFile('.'+req.url+'.html', function (error, pgResp) {

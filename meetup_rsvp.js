@@ -32,13 +32,12 @@ var server = http.createServer(function(req, res) {
 		res.end();
   } else if (req.url === '/getEvents') {
     var body = '';
+	console.log(req);
     req.on('data', function(chunk) {
       body += chunk;
     });
     req.on('end', function() {
       var data = qs.parse(this.body);
-	  console.log('body='+this.body);
-	  console.log('data='+data);
       res.writeHead(200);
 	  loadHostEvents(data.token, this.res);
     });

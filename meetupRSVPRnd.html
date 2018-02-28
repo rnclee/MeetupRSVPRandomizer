@@ -14,8 +14,8 @@
 		$.ajax({
 			url: "./getEvents",
 			method: 'POST',
-			data: { token : tok[0]  },
-			dataType: "html",
+			data: "{ token : '"+tok[0]+"'  }",
+			dataType: "application/json",
 			success: function (data) {
 				var ae = JSON.parse(data);
 				ae.forEach(function(event) {

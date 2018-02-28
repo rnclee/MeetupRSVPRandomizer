@@ -64,7 +64,7 @@ server.listen(server_port, server_ip_address, function () {
 			method: 'GET'
 			}, function(err, response, data) {
 				console.log(data);
-				setupMyHostEvents(data, this.token, this.res);
+				setupMyHostEvents(data, token, res);
 			});
   }
   function setupMyHostEvents(mdata, token, res) {
@@ -77,7 +77,7 @@ server.listen(server_port, server_ip_address, function () {
 			method: 'GET'
 			}, function(err, response, data) { 
 				console.log(data);
-				getEventsByHosted(this.m_id, data, this.token, this.res); 
+				getEventsByHosted(m_id, data, token, res); 
 			}
 		);
 	}
@@ -94,18 +94,18 @@ server.listen(server_port, server_ip_address, function () {
 			var ename=event.name;
 			var uname=event.group.urlname;
 			request({
-				uri: "https://api.meetup.com/"+this.uname+"/events/"+this.e_id+"/hosts?access_token="+this.token,
+				uri: "https://api.meetup.com/"+uname+"/events/"+e_id+"/hosts?access_token="+token,
 				method: 'GET',
 				}, function(err, response, data) {
 					console.log(data);
 					if(isEventHost(m_id, data))
 					{
-						if (this.rtn_data != '{') {
-							this.rtn_data = this.rtn_data + ',';
+						if (rtn_data != '{') {
+							rtn_data = rtn_data + ',';
 						}
-						this.rtn_data = this.rtn_data + '{'+
-							'id: \''+ this.e_id + '\'' +
-							', event: { group : { urlname : \'' + this.uname + '\'}, name : \''+ HtmlEncode(this.ename) + '\'} }' +
+						rtn_data = rtn_data + '{'+
+							'id: \''+ e_id + '\'' +
+							', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }' +
 						'}';
 					}
 				});

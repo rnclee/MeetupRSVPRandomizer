@@ -17,6 +17,7 @@
 			dataType: "text/html",
 			success: function (data) {
 				var ae = JSON.parse(data);
+				console.log(ae);
 				ae.forEach(function(event) {
 					var e_id=event.id;
 					var ename=event.name;

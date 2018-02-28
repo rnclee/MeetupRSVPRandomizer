@@ -63,6 +63,7 @@ server.listen(server_port, server_ip_address, function () {
 			uri: murl,
 			method: 'GET'
 			}, function(err, response, data) {
+				console.log(data);
 				setupMyHostEvents(data, this.token, this.res);
 			});
   }
@@ -74,7 +75,10 @@ server.listen(server_port, server_ip_address, function () {
 		request({
 			uri: aeurl,
 			method: 'GET'
-			}, function(err, response, data) { getEventsByHosted(this.m_id, data, this.token, this.res); }
+			}, function(err, response, data) { 
+				console.log(data);
+				getEventsByHosted(this.m_id, data, this.token, this.res); 
+			}
 		);
 	}
 	function HtmlEncode(s)
@@ -93,6 +97,7 @@ server.listen(server_port, server_ip_address, function () {
 				uri: "https://api.meetup.com/"+this.uname+"/events/"+this.e_id+"/hosts?access_token="+this.token,
 				method: 'GET',
 				}, function(err, response, data) {
+					console.log(data);
 					if(isEventHost(m_id, data))
 					{
 						if (this.rtn_data != '{') {

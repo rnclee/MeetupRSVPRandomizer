@@ -95,16 +95,17 @@ server.listen(server_port, server_ip_address, function () {
 					if(isEventHost(m_id, data))
 					{
 						if (rtn_data != '{') {
-							rtn_data = rtn_data + ',';
+							this.rtn_data = this.rtn_data + ',';
 						}
-						rtn_data = rtn_data + '{'+
-							'id: \''+ e_id + '\'' +
-							', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }' +
+						this.rtn_data = this.rtn_data + '{'+
+							'id: \''+ this.e_id + '\'' +
+							', event: { group : { urlname : \'' + this.uname + '\'}, name : \''+ HtmlEncode(this.ename) + '\'} }' +
 						'}';
 					}
 				});
 		});
 		rtn_data = rtn_data + '}';
+		console.log(rtn_data);
 		res.end(rtn_data);
 	}
 	function isEventHost(m_id, hdata) {

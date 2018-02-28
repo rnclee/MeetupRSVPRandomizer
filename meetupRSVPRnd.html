@@ -8,14 +8,14 @@
 </head>
 <body>
 <script>
-	function getEventsByHosted(m_id, aedata) {
+	function getEventsByHosted() {
 		$.ajax({
 			url: "./getEvents",
 			method: 'POST',
 			data: { token :  /access_token=([^&]+)/.exec(window.location.hash) },
 			dataType: "html",
 			success: function (data) {
-				var ae = JSON.parse(aedata);
+				var ae = JSON.parse(data);
 				ae.forEach(function(event) {
 					var e_id=event.id;
 					var ename=event.name;
@@ -25,12 +25,13 @@
 			}
 		});
 	}
+	$(document).ready(getEventsByHosted);
 </script>
 <div class="container">
 	<div class="main-area">
 		<div class="header">
 			<!-- STEP 1 -->
-			<div style="display: none" id="eventDiv">
+			<div id="eventDiv">
 				<span class="label">Select the meetup you want to use randomize RSVP on:</span>
 				<div id="listEvent">
 				</div>

@@ -13,7 +13,7 @@
 		$.ajax({
 			url: "./getEvents",
 			method: 'POST',
-			data: "{ token : '"+tok[0]+"'  }",
+			data: { token : tok[1] },
 			dataType: "text/html",
 			success: function (data) {
 				var ae = JSON.parse(data);

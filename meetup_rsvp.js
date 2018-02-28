@@ -34,12 +34,9 @@ var server = http.createServer(function(req, res) {
 		var body = '';
 		req.on('data', function (data) {
 			body += data;
-			console.log("Partial body: " + body);
-		});
-		req.on('end', function () {
-			console.log("Body: " + body);
 		});
 		var data = qs.parse(body);
+		console.log(data);
 		res.writeHead(200, {'Content-Type': 'text/html'});
 		loadHostEvents(data.token, this.res);
   } else {

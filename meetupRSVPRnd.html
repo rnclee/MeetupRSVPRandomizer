@@ -2,17 +2,15 @@
 <head>
 <link rel="stylesheet" type="text/css" href="css/meetup.css">
 <title>Meetup RSVP Randomizer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <script type="text/javascript" src="js/jquery.min.js"></script>
 </head>
 <body>
 <script>
-/*	function getEventsByHosted(m_id, aedata) {
+	function getEventsByHosted(m_id, aedata) {
 		$.ajax({
-			url: "http://meetup-rsvp-rnd-meetup-apps.7e14.starter-us-west-2.openshiftapps.com/getEvents",
+			url: "./getEvents",
 			method: 'POST',
-			data: {token : },
+			data: { token :  /access_token=([^&]+)/.exec(window.location.hash) },
 			dataType: "html",
 			success: function (data) {
 				var ae = JSON.parse(aedata);
@@ -24,14 +22,13 @@
 				});
 			}
 		});
-	}*/
-//eos
+	}
 </script>
 <div class="container">
 	<div class="main-area">
 		<div class="header">
 			<!-- STEP 1 -->
-			<div id="eventDiv">
+			<div style="display: none" id="eventDiv">
 				<span class="label">Select the meetup you want to use randomize RSVP on:</span>
 				<div id="listEvent">
 				</div>

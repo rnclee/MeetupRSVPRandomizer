@@ -9,14 +9,14 @@ var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0'
 	
 var server = http.createServer(function(req, res) {
   if (req.url.endsWith('.css')) {
-	fs.readFile('.'+req.url, function (error, pgResp) {
-	if (error) {
-		throw error; 
-	} else {
-		res.writeHead(200, { 'Content-Type': 'text/css' });
-		res.write(pgResp);
-		res.end();
-	}});
+		fs.readFile('.'+req.url, function (error, pgResp) {
+		if (error) {
+			throw error; 
+		} else {
+			res.writeHead(200, { 'Content-Type': 'text/css' });
+			res.write(pgResp);
+			res.end();
+		}});
   } else if (req.url.endsWith('.js')) {
 	fs.readFile('.'+req.url, function (error, pgResp) {
 	if (error) {
@@ -27,28 +27,22 @@ var server = http.createServer(function(req, res) {
 		res.end();
 	}});
   } else if (req.method === 'POST' && req.url === '/getEvents') {
-
+    var body = '';
+    req.on('data', function(chunk) {
+      body += chunk;
+    });
+    req.on('end', function() {
+      var data = qs.parse(body);
+      res.writeHead(200);
+	  loadHostEvents(data.token, res);
+    });
   } else {
 	fs.readFile('.'+req.url+'.html', function (error, pgResp) {
 	if (error) {
 		throw error; 
 	} else {
-		console.log(req);
-		if (/access_token=([^&]+)/.test(req.url))
-		{
-			var token = req.url.match(/access_token=([^&]+)/);
-			res.writeHead(200, { 'Content-Type': 'text/html' });
-			loadHostEvents(token[1], function (pgResp, js) { 
-				var script = pgResp.replace("//eos", "$(document).ready(function () {" + js + "});")
-				this.res.write(script);
-				this.res.end();
-			});
-		}
-		else 
-		{
-			res.write(pgResp);
-			res.end();
-		}
+		res.write(pgResp);
+		res.end();
 	}});
   }
 });
@@ -58,17 +52,17 @@ server.listen(server_port, server_ip_address, function () {
 });
 
 
-	function loadHostEvents(token, setJS)
+	function loadHostEvents(token, res)
 	{
 		var murl = "https://api.meetup.com/members/self?access_token="+token;
 		request({
 			uri: murl,
 			method: 'GET'
 			}, function(err, response, data) {
-				setupMyHostEvents(data, this.token, this.setJS);
+				setupMyHostEvents(data, this.token, this.res);
 			});
   }
-  function setupMyHostEvents(mdata, token, setJS) {
+  function setupMyHostEvents(mdata, token, res) {
 		console.log("setupMyHostEvents");
 		var m = JSON.parse(mdata);
 		var m_id = m.id;
@@ -76,14 +70,14 @@ server.listen(server_port, server_ip_address, function () {
 		request({
 			uri: aeurl,
 			method: 'GET'
-			}, function(err, response, data) { getEventsByHosted(this.m_id, data, this.token, this.setJS); }
+			}, function(err, response, data) { getEventsByHosted(this.m_id, data, this.token, this.res); }
 		);
 	}
 	function HtmlEncode(s)
 	{
 	      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/\[/g, '&#91;').replace(/\]/g, '&#93;').replace(/!/g, '&#33;');
 	}
-	function getEventsByHosted(m_id, token, aedata, setJS) {
+	function getEventsByHosted(m_id, token, aedata, res) {
 		console.log("getEventsByHosted");
 		var ae = JSON.parse(aedata);
 		var rtn_data='{';
@@ -108,7 +102,7 @@ server.listen(server_port, server_ip_address, function () {
 				});
 		});
 		rtn_data = rtn_data + '}';
-		setJS(rtn_data);
+		res.end(rtn_data);
 	}
 	function isEventHost(m_id, hdata) {
 		console.log("isEventHost");

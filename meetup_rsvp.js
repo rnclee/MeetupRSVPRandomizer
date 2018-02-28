@@ -1,5 +1,4 @@
 var http = require('http'),
-    qs = require('querystring'),
     request = require('request'),
 	fs = require('fs'),
 	path = require('path');
@@ -35,6 +34,7 @@ var server = http.createServer(function(req, res) {
 		req.on('data', function (data) {
 			body += data;
 		});
+		console.log(body);
 		var data = JSON.parse(body);
 		console.log(data);
 		res.writeHead(200, {'Content-Type': 'text/html'});

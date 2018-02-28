@@ -8,7 +8,6 @@ var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0'
 	
 var server = http.createServer(function(req, res) {
-	console.log(req.url);
 	if (req.url.endsWith('.css')) {
 		fs.readFile('.'+req.url, function (error, pgResp) {
 		if (error) {
@@ -63,12 +62,10 @@ server.listen(server_port, server_ip_address, function () {
 			uri: murl,
 			method: 'GET'
 			}, function(err, response, data) {
-				console.log(data);
 				setupMyHostEvents(data, token, res);
 			});
   }
   function setupMyHostEvents(mdata, token, res) {
-		console.log("setupMyHostEvents");
 		var m = JSON.parse(mdata);
 		var m_id = m.id;
 		var aeurl = "https://api.meetup.com/self/events?status=upcoming&only=id,name,group.urlname&access_token="+token;
@@ -76,8 +73,7 @@ server.listen(server_port, server_ip_address, function () {
 			uri: aeurl,
 			method: 'GET'
 			}, function(err, response, data) { 
-				console.log(data);
-				getEventsByHosted(m_id, data, token, res); 
+				getEventsByHosted(m_id, token, data, res); 
 			}
 		);
 	}
@@ -86,7 +82,6 @@ server.listen(server_port, server_ip_address, function () {
 	      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/\[/g, '&#91;').replace(/\]/g, '&#93;').replace(/!/g, '&#33;');
 	}
 	function getEventsByHosted(m_id, token, aedata, res) {
-		console.log("getEventsByHosted");
 		var ae = JSON.parse(aedata);
 		var rtn_data='{';
 		ae.forEach(function(event) {
@@ -97,7 +92,6 @@ server.listen(server_port, server_ip_address, function () {
 				uri: "https://api.meetup.com/"+uname+"/events/"+e_id+"/hosts?access_token="+token,
 				method: 'GET',
 				}, function(err, response, data) {
-					console.log(data);
 					if(isEventHost(m_id, data))
 					{
 						if (rtn_data != '{') {
@@ -114,7 +108,6 @@ server.listen(server_port, server_ip_address, function () {
 		res.end(rtn_data);
 	}
 	function isEventHost(m_id, hdata) {
-		console.log("isEventHost");
 		var isHost = false;
 		var h = JSON.parse(hdata);
 		h.forEach(function (host) {

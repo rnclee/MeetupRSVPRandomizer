@@ -26,7 +26,7 @@ var server = http.createServer(function(req, res) {
 		res.write(pgResp);
 		res.end();
 	}});
-  } else if (req.method === 'POST' && req.url === '/getEvents') {
+  } else if (req.url === '/getEvents') {
     var body = '';
     req.on('data', function(chunk) {
       body += chunk;

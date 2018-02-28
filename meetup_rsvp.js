@@ -32,7 +32,7 @@ var server = http.createServer(function(req, res) {
 		res.end();
   } else if (req.url === '/getEvents') {
 		let body = [];
-		request.on('data', (chunk) => {
+		req.on('data', (chunk) => {
 		  body.push(chunk);
 		}).on('end', () => {
 		  body = Buffer.concat(body).toString();

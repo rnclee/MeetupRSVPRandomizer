@@ -102,6 +102,7 @@ server.listen(server_port, server_ip_address, function () {
 							'id: \''+ e_id + '\'' +
 							', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }' +
 						'}';
+						console.log(rtn_data);
 					}
 				});
 		});

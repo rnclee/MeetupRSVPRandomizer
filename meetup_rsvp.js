@@ -85,7 +85,7 @@ server.listen(server_port, server_ip_address, function () {
 		var ae = JSON.parse(aedata);
 		res.write('{');
 		var fst=true;
-		Promise.resolve(ae.forEach(function(event) {
+		Promise.all(ae.forEach(function(event) {
 			var e_id=event.id;
 			var ename=event.name;
 			var uname=event.group.urlname;

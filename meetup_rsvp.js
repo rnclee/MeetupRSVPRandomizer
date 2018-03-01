@@ -83,29 +83,28 @@ server.listen(server_port, server_ip_address, function () {
 	}
 	function getEventsByHosted(m_id, token, aedata, res) {
 		var ae = JSON.parse(aedata);
-		var rtn_data='{';
+		res.write('{');
 		ae.forEach(function(event) {
 			var e_id=event.id;
 			var ename=event.name;
 			var uname=event.group.urlname;
+			var fst=true;
 			request({
 				uri: "https://api.meetup.com/"+uname+"/events/"+e_id+"/hosts?access_token="+token,
 				method: 'GET',
 				}, function(err, response, data) {
 					if(isEventHost(m_id, data))
 					{
-						if (rtn_data != '{') {
-							rtn_data = rtn_data + ',';
+						if (!fst) {
+							res.write(',');
 						}
-						rtn_data = rtn_data + '{'+
+						fst=false;
+						res.write('{'+
 							'id: \''+ e_id + '\'' +
-							', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }';
+							', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }');
 					}
 				});
 		});
-		rtn_data = rtn_data + '}';
-		console.log(rtn_data);
-		res.write(rtn_data);
 		res.end();
 	}
 	function isEventHost(m_id, hdata) {

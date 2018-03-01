@@ -38,7 +38,6 @@ var server = http.createServer(function(req, res) {
 			var data = qs.parse(body);
 			res.writeHead(200, {'Content-Type': 'text/html'});
 			loadHostEvents(data.token, res);
-			console.log(res);
 		});
   } else {
 	fs.readFile('.'+req.url+'.html', function (error, pgResp) {
@@ -100,9 +99,7 @@ server.listen(server_port, server_ip_address, function () {
 						}
 						rtn_data = rtn_data + '{'+
 							'id: \''+ e_id + '\'' +
-							', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }' +
-						'}';
-						console.log(rtn_data);
+							', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }';
 					}
 				});
 		});

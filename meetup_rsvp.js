@@ -96,10 +96,10 @@ server.listen(server_port, server_ip_address, function () {
 					if(isEventHost(m_id, data))
 					{
 						if (!fst) {
-							this.res.write(',');
+							res.write(',');
 						}
 						fst=false;
-						this.res.write('{'+
+						res.write('{'+
 							'id: \''+ e_id + '\'' +
 							', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }');
 					}

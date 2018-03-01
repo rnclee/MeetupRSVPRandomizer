@@ -84,7 +84,7 @@ server.listen(server_port, server_ip_address, function () {
 	function getEventsByHosted(m_id, token, aedata, res) {
 		var ae = JSON.parse(aedata);
 		res.write('{');
-		ae.forEach(function(event) {
+		Promise.all(ae.forEach(function(event) {
 			var e_id=event.id;
 			var ename=event.name;
 			var uname=event.group.urlname;
@@ -96,16 +96,18 @@ server.listen(server_port, server_ip_address, function () {
 					if(isEventHost(m_id, data))
 					{
 						if (!fst) {
-							res.write(',');
+							this.res.write(',');
 						}
 						fst=false;
-						res.write('{'+
+						this.res.write('{'+
 							'id: \''+ e_id + '\'' +
 							', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }');
 					}
 				});
+		})).then(function() {
+			res.write('}');
+			res.end();
 		});
-		res.end();
 	}
 	function isEventHost(m_id, hdata) {
 		var isHost = false;

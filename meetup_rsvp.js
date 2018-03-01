@@ -104,10 +104,9 @@ server.listen(server_port, server_ip_address, function () {
 							', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }');
 					}
 				});
-		})).then(function() {
-			res.write('}');
-			res.end();
-		});
+		}));
+		res.write('}');
+		res.end();
 	}
 	function isEventHost(m_id, hdata) {
 		var isHost = false;

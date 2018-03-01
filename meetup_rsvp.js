@@ -31,6 +31,7 @@ var server = http.createServer(function(req, res) {
 		res.end();
   } else if (req.url === '/getEvents') {
 		var body = '';
+		res.writeHead(200, { 'Content-Type': 'text/html' });
 		req.on('data', function (data) {
 			body += data;
 		});
@@ -92,8 +93,6 @@ server.listen(server_port, server_ip_address, function () {
 				uri: "https://api.meetup.com/"+uname+"/events/"+e_id+"/hosts?access_token="+token,
 				method: 'GET',
 				}, function(err, response, data) {
-					console.log(data);
-					console.log(m_id);
 					if(isEventHost(m_id, data))
 					{
 						if (rtn_data != '{') {
@@ -108,7 +107,7 @@ server.listen(server_port, server_ip_address, function () {
 		});
 		rtn_data = rtn_data + '}';
 		console.log(rtn_data);
-		res.end(rtn_data);
+		res.write(rtn_data);
 	}
 	function isEventHost(m_id, hdata) {
 		var isHost = false;

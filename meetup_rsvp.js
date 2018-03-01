@@ -84,6 +84,7 @@ server.listen(server_port, server_ip_address, function () {
 	function getEventsByHosted(m_id, token, aedata, res) {
 		var ae = JSON.parse(aedata);
 		var rtn_data='{';
+		console.log(JSON.stringify(ae));
 		ae.forEach(function(event) {
 			var e_id=event.id;
 			var ename=event.name;

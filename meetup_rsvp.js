@@ -88,21 +88,20 @@ server.listen(server_port, server_ip_address, function () {
 			var e_id=event.id;
 			var ename=event.name;
 			var uname=event.group.urlname;
-			console.log("https://api.meetup.com/"+this.uname+"/events/"+this.e_id+"/hosts?access_token="+this.token);
 			request({
-				uri: "https://api.meetup.com/"+this.uname+"/events/"+this.e_id+"/hosts?access_token="+this.token,
+				uri: "https://api.meetup.com/"+uname+"/events/"+e_id+"/hosts?access_token="+token,
 				method: 'GET',
 				}, function(err, response, data) {
 					console.log(data);
 					console.log(m_id);
 					if(isEventHost(m_id, data))
 					{
-						if (this.rtn_data != '{') {
-							this.rtn_data = this.rtn_data + ',';
+						if (rtn_data != '{') {
+							rtn_data = rtn_data + ',';
 						}
-						this.rtn_data = this.rtn_data + '{'+
-							'id: \''+ this.e_id + '\'' +
-							', event: { group : { urlname : \'' + this.uname + '\'}, name : \''+ HtmlEncode(this.ename) + '\'} }' +
+						rtn_data = rtn_data + '{'+
+							'id: \''+ e_id + '\'' +
+							', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }' +
 						'}';
 					}
 				});

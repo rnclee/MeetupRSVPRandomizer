@@ -31,7 +31,6 @@ var server = http.createServer(function(req, res) {
 		res.end();
   } else if (req.url === '/getEvents') {
 		var body = '';
-		res.writeHead(200, { 'Content-Type': 'text/html' });
 		req.on('data', function (data) {
 			body += data;
 		});
@@ -39,6 +38,8 @@ var server = http.createServer(function(req, res) {
 			var data = qs.parse(body);
 			res.writeHead(200, {'Content-Type': 'text/html'});
 			loadHostEvents(data.token, res);
+			console.log(res);
+			res.end();
 		});
   } else {
 	fs.readFile('.'+req.url+'.html', function (error, pgResp) {

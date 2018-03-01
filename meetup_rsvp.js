@@ -84,11 +84,11 @@ server.listen(server_port, server_ip_address, function () {
 	function getEventsByHosted(m_id, token, aedata, res) {
 		var ae = JSON.parse(aedata);
 		res.write('{');
+		var fst=true;
 		Promise.all(ae.forEach(function(event) {
 			var e_id=event.id;
 			var ename=event.name;
 			var uname=event.group.urlname;
-			var fst=true;
 			request({
 				uri: "https://api.meetup.com/"+uname+"/events/"+e_id+"/hosts?access_token="+token,
 				method: 'GET',

@@ -39,7 +39,6 @@ var server = http.createServer(function(req, res) {
 			res.writeHead(200, {'Content-Type': 'text/html'});
 			loadHostEvents(data.token, res);
 			console.log(res);
-			res.end();
 		});
   } else {
 	fs.readFile('.'+req.url+'.html', function (error, pgResp) {
@@ -109,6 +108,7 @@ server.listen(server_port, server_ip_address, function () {
 		rtn_data = rtn_data + '}';
 		console.log(rtn_data);
 		res.write(rtn_data);
+		res.end();
 	}
 	function isEventHost(m_id, hdata) {
 		var isHost = false;

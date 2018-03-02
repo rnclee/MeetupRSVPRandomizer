@@ -106,7 +106,7 @@ server.listen(server_port, server_ip_address, function () {
 				});
 		})
 		).then(function(value) {
-			res.write('}');
+			res.write(' } ');
 			res.end();
 		});
 	}

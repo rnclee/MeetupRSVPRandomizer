@@ -109,7 +109,7 @@ server.listen(server_port, server_ip_address, function () {
 			console.log('success!');
 			res.end(']');
 		}, function (reason){
-			console.log('fail:'+JSON.stringify(reason));
+			console.log('fail:'+reason);
 			res.end(']');
 		});
 	}

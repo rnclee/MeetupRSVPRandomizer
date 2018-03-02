@@ -85,7 +85,7 @@ server.listen(server_port, server_ip_address, function () {
 		var ae = JSON.parse(aedata);
 		res.write('[');
 		var fst=true;
-		Promise.all(new Promise(resolve => ae.forEach(function(event) {
+		Promise.all([ new Promise(resolve => ae.forEach(function(event) {
 			if (event != null)
 			{
 				var e_id=event.id;
@@ -110,11 +110,9 @@ server.listen(server_port, server_ip_address, function () {
 						}
 					});
 			}
-		}))).then(function (value){
+		})) ]).finally(function() {
 			console.log('success!');
 			res.end(']');
-		}, function (reason){
-			console.log('fail:'+reason);
 		});
 	}
 	function isEventHost(m_id, hdata) {

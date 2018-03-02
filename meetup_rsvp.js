@@ -105,7 +105,13 @@ server.listen(server_port, server_ip_address, function () {
 					}
 				});
 		})
-		).then(res.end(']'));
+		).then(function (value){
+			console.log('success!');
+			res.end(']');
+		}, function (value){
+			console.log('fail:'+JSON.stringify(value));
+			res.end(']');
+		});
 	}
 	function isEventHost(m_id, hdata) {
 		var isHost = false;

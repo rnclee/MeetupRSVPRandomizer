@@ -108,8 +108,8 @@ server.listen(server_port, server_ip_address, function () {
 		).then(function (value){
 			console.log('success!');
 			res.end(']');
-		}, function (value){
-			console.log('fail:'+JSON.stringify(value));
+		}, function (reason){
+			console.log('fail:'+JSON.stringify(reason));
 			res.end(']');
 		});
 	}

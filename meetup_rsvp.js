@@ -83,7 +83,7 @@ server.listen(server_port, server_ip_address, function () {
 	}
 	function getEventsByHosted(m_id, token, aedata, res) {
 		var ae = JSON.parse(aedata);
-		res.write('{');
+		res.write('[');
 		var fst=true;
 		Promise.all(ae.forEach(function(event) {
 			var e_id=event.id;
@@ -105,10 +105,7 @@ server.listen(server_port, server_ip_address, function () {
 					}
 				});
 		})
-		).then(function(value) {
-			res.write(' } ');
-			res.end();
-		});
+		).then(res.end(']'));
 	}
 	function isEventHost(m_id, hdata) {
 		var isHost = false;

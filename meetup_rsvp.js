@@ -86,24 +86,30 @@ server.listen(server_port, server_ip_address, function () {
 		res.write('[');
 		var fst=true;
 		Promise.all(ae.forEach(function(event) {
-			var e_id=event.id;
-			var ename=event.name;
-			var uname=event.group.urlname;
-			request({
-				uri: "https://api.meetup.com/"+uname+"/events/"+e_id+"/hosts?access_token="+token,
-				method: 'GET',
-				}, function(err, response, data) {
-					if(isEventHost(m_id, data))
-					{
-						if (!fst) {
-							res.write(',');
+			if (event != null)
+			{
+				var e_id=event.id;
+				var ename=event.name;
+				var uname=event.group.urlname;
+				request({
+					uri: "https://api.meetup.com/"+uname+"/events/"+e_id+"/hosts?access_token="+token,
+					method: 'GET',
+					}, function(err, response, data) {
+						if (data != null && m_id != null)
+						{
+							if(isEventHost(m_id, data))
+							{
+								if (!fst) {
+									res.write(',');
+								}
+								fst=false;
+								res.write('{'+
+									'id: \''+ e_id + '\'' +
+									', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }');
+							}
 						}
-						fst=false;
-						res.write('{'+
-							'id: \''+ e_id + '\'' +
-							', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }');
-					}
-				});
+					});
+			}
 		})
 		).then(function (value){
 			console.log('success!');

@@ -116,7 +116,6 @@ server.listen(server_port, server_ip_address, function () {
 			res.end(']');
 		}, function (reason){
 			console.log('fail:'+reason);
-			res.end(']');
 		});
 	}
 	function isEventHost(m_id, hdata) {

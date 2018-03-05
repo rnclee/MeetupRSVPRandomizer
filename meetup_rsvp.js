@@ -144,14 +144,13 @@ server.listen(server_port, server_ip_address, function () {
 	var rurl = "http://api.meetup.com/"+uname+"/events/"+e_id+"/rsvps";
 	var eurl = "http://api.meetup.com/"+uname+"/events/"+e_id;
 	var memList = [];
-	$.ajax({
-	url: rurl + "?response=yes&only=member%2Cresponse",
-	method: 'GET',
-	dataType: "html",
-	success: function (data) {
-		var json = JSON.parse(data);
+	request({
+		uri: rurl + "?response=yes&only=member%2Cresponse",
+		method: 'GET'
+	}, function(err, response, rsvps) {
+		var rsvp = JSON.parse(rsvps);
 		var rlist = [];
-		json.forEach(function (rsvp) {
+		rsvp.forEach(function (rsvp) {
 			if(rsvp.response == "waitlist" && rsvp.member.event_context.host != "true")
 			{
 				rlist[rlist.length]=rsvp.member.id;
@@ -171,17 +170,15 @@ server.listen(server_port, server_ip_address, function () {
 						,'member_id' : m_id
 						,'access_token' : token
 					}
-				}, function(err, response, data) {
-					var rsvped = JSON.parse(data);
+				}, function(err, response, rsvpedList) {
+					var rsvped = JSON.parse(rsvpedList);
 					memList.push(rsvped.member.name);
 					if(i === rlim-1) {
 						res.end(JSON.stringify(memList));
 					}
-				}
-			});
+				});
 			rlist.splice(idx,1);
 		}
-	}
 	});
 
   }

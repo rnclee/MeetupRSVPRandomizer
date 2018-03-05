@@ -165,7 +165,7 @@ server.listen(server_port, server_ip_address, function () {
 			var idx = getRandomInt(rlist.length);
 			var m_id=rlist[idx];
 			request({
-					uri: 'https://api.meetup.com/2/rsvp/',
+					uri: 'https://api.meetup.com/2/rsvp/?access_token='+token,
 					method: 'POST',
 					data: {
 						'guests' : 0 

@@ -85,6 +85,7 @@ server.listen(server_port, server_ip_address, function () {
 		var ae = JSON.parse(aedata);
 		var fst=true;
 		var eventList = [];
+		var cnt=0;
 		ae.forEach(function(event, idx, arr) {
 			if (event != null)
 			{
@@ -108,9 +109,8 @@ server.listen(server_port, server_ip_address, function () {
 									', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }');
 							}
 						}
-						console.log("local: " +eventList.length+","+arr.length);
-						console.log(JSON.stringify(eventList));
-						if(arr.length === eventList.length) {
+						cnt++;
+						if(arr.length === cnt) {
 							res.end(JSON.stringify(eventList));
 						}
 					});

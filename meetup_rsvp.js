@@ -64,7 +64,9 @@ server.listen(server_port, server_ip_address, function () {
   console.log( "Listening on " + server_ip_address + ", port " + server_port )
 });
 
-
+	function getRandomInt(max) {
+	  return Math.floor(Math.random() * Math.floor(max));
+	}
 	function loadHostEvents(token, res)
 	{
 		var murl = "https://api.meetup.com/members/self?access_token="+token;

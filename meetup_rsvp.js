@@ -172,7 +172,7 @@ server.listen(server_port, server_ip_address, function () {
 						//,'event_id' : e_id
 						,'rsvp' : "yes"
 						,'member_id' : m_id
-						,'key' : token
+						,'access_token' : token
 					}
 				}, function(err, response, rsvpedList) {
 					res.writeHead(response.statusCode, {'Content-Type': 'text/html'});

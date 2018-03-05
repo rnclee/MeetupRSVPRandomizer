@@ -145,19 +145,18 @@ server.listen(server_port, server_ip_address, function () {
 	var rurl = "http://api.meetup.com/"+uname+"/events/"+e_id+"/rsvps";
 	var eurl = "http://api.meetup.com/"+uname+"/events/"+e_id;
 	var memList = [];
-	console.log(token);
 	request({
-		uri: rurl + "?response=yes&only=member%2Cresponse",
+		uri: rurl + "?response=yes&only=member%2Cresponse&access_token="+token,
 		method: 'GET'
-	}, function(err, response, rsvps) {
-		var rsvp = JSON.parse(rsvps);
-		var rlist = [];
-		rsvp.forEach(function (rsvp) {
-			if(rsvp.response == "waitlist" && rsvp.member.event_context.host != "true")
-			{
-				rlist[rlist.length]=rsvp.member.id;
-			}
-		});
+		}, function(err, response, rsvps) {
+			var rsvp = JSON.parse(rsvps);
+			var rlist = [];
+			rsvp.forEach(function (rsvp) {
+				if(rsvp.response == "waitlist" && rsvp.member.event_context.host != "true")
+				{
+					rlist[rlist.length]=rsvp.member.id;
+				}
+			});
 		for (i=0; i < rlim; i++) {
 			var idx = getRandomInt(rlist.length);
 			var m_id=rlist[idx];

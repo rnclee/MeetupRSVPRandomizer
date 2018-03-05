@@ -99,9 +99,13 @@ server.listen(server_port, server_ip_address, function () {
 						{
 							if(isEventHost(m_id, data))
 							{
-								eventList.push('{'+
-									'id: \''+ e_id + '\'' +
-									', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }');
+								eventList.push({
+									id: e_id 
+									, event: { 
+												group : { urlname : uname }
+												, name : HtmlEncode(ename) 
+											}
+								});
 							}
 						}
 						cnt++;

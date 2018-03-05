@@ -172,7 +172,7 @@ server.listen(server_port, server_ip_address, function () {
 					}
 				}, function(err, response, rsvpedList) {
 					res.writeHead(response.statusCode, {'Content-Type': 'text/html'});
-					if (error && response.statusCode == 405) {
+					if (err && response.statusCode == 405) {
 						res.end('reload');
 					}
 					var rsvped = JSON.parse(rsvpedList);

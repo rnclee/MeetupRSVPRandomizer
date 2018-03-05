@@ -14,47 +14,24 @@
 	function getRSVPS() {
 		var e_id = $('#e_id').val();
 		var uname = $('#uname').val();
-	//https://www.meetup.com/boardgame-oasis/events/247451690/
-	var rurl = "http://api.meetup.com/"+uname+"/events/"+e_id+"/rsvps";
-	var eurl = "http://api.meetup.com/"+uname+"/events/"+e_id;
+		var tok=/access_token=([^&]+)/.exec(window.location.hash);
 	var rlim=$('#rcnt').val();
 	$.ajax({
-	url: rurl + "?response=yes&only=member%2Cresponse",
-	method: 'GET',
-	dataType: "html",
-	success: function (data) {
-		var json = JSON.parse(data);
-		var rlist = [];
-		json.forEach(function (rsvp) {
-			if(rsvp.response == "waitlist" && rsvp.member.event_context.host != "true")
-			{
-				rlist[rlist.length]=rsvp.member.id;
-			}
-		});
-		for (i=0; i < rlim; i++) {
-			var idx = getRandomInt(rlist.length);
-			var m_id=rlist[idx];
-			console.log(m_id);
-			$.ajax({
-				url: 'https://api.meetup.com/2/rsvp/',
-				method: 'POST',
-				data: {
-					'guests' : 0 
-					,'event_id' : e_id
-					,'rsvp' : "yes"
-					,'member_id' : m_id
-					,'access_token' : $('#Token').val()
-				},
-				dataType: "html",
-				success: function (data) {
-					var rsvped = JSON.parse(data);
-					$('#viewEvent').append(rsvped.member.name + ' was added to the "Going" list! <br \>');
-					
-				}
+		url: "./randomize",
+		method: 'POST',
+		data: { 'e_id' : e_id
+			,'uname' : uname
+			,'rlim' : rlim
+			,'token' : tok[1] 
+		},
+		dataType: "html",
+		success: function (members) {
+			var mem = JSON.parse(members);
+			var rlist = [];
+			mem.forEach(function (rsvp) {
+				$('#viewEvent').append(rsvped.member.name + ' was added to the "Going" list! <br \>');
 			});
-			rlist.splice(idx,1);
 		}
-	}
 	});
 
   }

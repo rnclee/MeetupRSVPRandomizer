@@ -39,6 +39,16 @@ var server = http.createServer(function(req, res) {
 			res.writeHead(200, {'Content-Type': 'text/html'});
 			loadHostEvents(data.token, res);
 		});
+  } else if (req.url === '/randomize') {
+		var body = '';
+		req.on('data', function (data) {
+			body += data;
+		});
+		req.on('end', function () {
+			var data = qs.parse(body);
+			res.writeHead(200, {'Content-Type': 'text/html'});
+			submitRSVPS(data.e_id,data.uname,data.rlim,data.token,res);
+		});
   } else {
 	fs.readFile('.'+req.url+'.html', function (error, pgResp) {
 	if (error) {
@@ -125,3 +135,54 @@ server.listen(server_port, server_ip_address, function () {
 		});
 		return isHost;
 	}
+	
+	
+	
+	
+	function submitRSVPS(e_id,uname,rlim,token,res) {
+	//https://www.meetup.com/boardgame-oasis/events/247451690/
+	var rurl = "http://api.meetup.com/"+uname+"/events/"+e_id+"/rsvps";
+	var eurl = "http://api.meetup.com/"+uname+"/events/"+e_id;
+	var memList = [];
+	$.ajax({
+	url: rurl + "?response=yes&only=member%2Cresponse",
+	method: 'GET',
+	dataType: "html",
+	success: function (data) {
+		var json = JSON.parse(data);
+		var rlist = [];
+		json.forEach(function (rsvp) {
+			if(rsvp.response == "waitlist" && rsvp.member.event_context.host != "true")
+			{
+				rlist[rlist.length]=rsvp.member.id;
+			}
+		});
+		for (i=0; i < rlim; i++) {
+			var idx = getRandomInt(rlist.length);
+			var m_id=rlist[idx];
+			console.log(m_id);
+			$.ajax({
+				url: 'https://api.meetup.com/2/rsvp/',
+				method: 'POST',
+				data: {
+					'guests' : 0 
+					,'event_id' : e_id
+					,'rsvp' : "yes"
+					,'member_id' : m_id
+					,'access_token' : token
+				},
+				dataType: "html",
+				success: function (data) {
+					var rsvped = JSON.parse(data);
+					memList.push(rsvped.member.name);
+					if(i === rlim-1) {
+						res.end(JSON.stringify(memList));
+					}
+				}
+			});
+			rlist.splice(idx,1);
+		}
+	}
+	});
+
+  }

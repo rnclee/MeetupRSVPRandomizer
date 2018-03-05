@@ -175,6 +175,13 @@ server.listen(server_port, server_ip_address, function () {
 						,'access_token' : token
 					}
 				}, function(err, response, rsvpedList) {
+					console.log({
+						'guests' : 0 
+						,'event_id' : e_id
+						,'rsvp' : "yes"
+						,'member_id' : m_id
+						,'access_token' : token
+					});
 					res.writeHead(response.statusCode, {'Content-Type': 'text/html'});
 					if (err && response.statusCode == 405) {
 						res.end('reload');

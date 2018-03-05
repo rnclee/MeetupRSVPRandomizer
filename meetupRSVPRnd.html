@@ -15,13 +15,14 @@
 			method: 'POST',
 			data: { token : tok[1] },
 			dataType: "text/html",
-			success: function (data) {
-				var ae = JSON.parse(data);
+			success: function (events) {
+				var ae = JSON.parse(events);
 				console.log(ae);
 				ae.forEach(function(event) {
 					var e_id=event.id;
 					var ename=event.name;
 					var uname=event.group.urlname;
+					alert("<input id=\"eid_"+e_id+"\" type=\"button\" onclick=\"selectEvent('" + e_id + "','" + uname + "','" + encodeURI(ename) + "')\" value=\"" + ename + "\"><br>");
 					$('#listEvent').append("<input id=\"eid_"+e_id+"\" type=\"button\" onclick=\"selectEvent('" + e_id + "','" + uname + "','" + encodeURI(ename) + "')\" value=\"" + ename + "\"><br>");
 				});
 			}

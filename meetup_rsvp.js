@@ -108,9 +108,9 @@ server.listen(server_port, server_ip_address, function () {
 									', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }');
 							}
 						}
-						console.log("local: " +eventList.length);
+						console.log("local: " +eventList.length+","+arr.length);
+						console.log(JSON.stringify(eventList);
 						if(arr.length === eventList.length) {
-							console.log(JSON.stringify(eventList));
 							res.end(JSON.stringify(eventList));
 						}
 					});

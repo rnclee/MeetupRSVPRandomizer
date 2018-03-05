@@ -156,6 +156,10 @@ server.listen(server_port, server_ip_address, function () {
 				{
 					rlist[rlist.length]=rsvp.member.id;
 				}
+				if(err)
+				{
+					console.log(err);
+				}
 			});
 		for (i=0; i < rlim; i++) {
 			var idx = getRandomInt(rlist.length);
@@ -181,6 +185,10 @@ server.listen(server_port, server_ip_address, function () {
 					memList.push(rsvped.member.name);
 					if(i === rlim-1) {
 						res.end(JSON.stringify(memList));
+					}
+					if(err)
+					{
+						console.log(err);
 					}
 				});
 			rlist.splice(idx,1);

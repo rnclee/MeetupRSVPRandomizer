@@ -163,7 +163,7 @@ server.listen(server_port, server_ip_address, function () {
 			console.log(m_id);
 			request({
 					uri: 'https://api.meetup.com/2/rsvp/',
-					method: 'POST'
+					method: 'POST',
 					data: {
 						'guests' : 0 
 						,'event_id' : e_id

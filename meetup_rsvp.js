@@ -161,18 +161,17 @@ server.listen(server_port, server_ip_address, function () {
 			var idx = getRandomInt(rlist.length);
 			var m_id=rlist[idx];
 			console.log(m_id);
-			$.ajax({
-				url: 'https://api.meetup.com/2/rsvp/',
-				method: 'POST',
-				data: {
-					'guests' : 0 
-					,'event_id' : e_id
-					,'rsvp' : "yes"
-					,'member_id' : m_id
-					,'access_token' : token
-				},
-				dataType: "html",
-				success: function (data) {
+			request({
+					uri: 'https://api.meetup.com/2/rsvp/',
+					method: 'POST'
+					data: {
+						'guests' : 0 
+						,'event_id' : e_id
+						,'rsvp' : "yes"
+						,'member_id' : m_id
+						,'access_token' : token
+					}
+				}, function(err, response, data) {
 					var rsvped = JSON.parse(data);
 					memList.push(rsvped.member.name);
 					if(i === rlim-1) {

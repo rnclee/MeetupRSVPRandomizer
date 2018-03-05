@@ -165,14 +165,14 @@ server.listen(server_port, server_ip_address, function () {
 			var idx = getRandomInt(rlist.length);
 			var m_id=rlist[idx];
 			request({
-					uri: 'https://api.meetup.com/2/rsvp/',
+					uri: 'https://api.meetup.com/2/rsvp/'+e_id,
 					method: 'POST',
 					data: {
 						'guests' : 0 
-						,'event_id' : e_id
+						//,'event_id' : e_id
 						,'rsvp' : "yes"
 						,'member_id' : m_id
-						//,'access_token' : token
+						,'access_token' : token
 					},
 					headers : {'Authorization' : 'Bearer '+token}
 				}, function(err, response, rsvpedList) {

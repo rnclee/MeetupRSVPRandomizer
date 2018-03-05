@@ -8,6 +8,53 @@
 </head>
 <body>
 <script>
+	function getRSVPS() {
+		var e_id = $('#e_id').val();
+		var uname = $('#uname').val();
+	//https://www.meetup.com/boardgame-oasis/events/247451690/
+	var rurl = "http://api.meetup.com/"+uname+"/events/"+e_id+"/rsvps";
+	var eurl = "http://api.meetup.com/"+uname+"/events/"+e_id;
+	var rlim=$('#rcnt').val();
+	$.ajax({
+	url: rurl + "?response=yes&only=member%2Cresponse",
+	method: 'GET',
+	dataType: "html",
+	success: function (data) {
+		var json = JSON.parse(data);
+		var rlist = [];
+		json.forEach(function (rsvp) {
+			if(rsvp.response == "waitlist" && rsvp.member.event_context.host != "true")
+			{
+				rlist[rlist.length]=rsvp.member.id;
+			}
+		});
+		for (i=0; i < rlim; i++) {
+			var idx = getRandomInt(rlist.length);
+			var m_id=rlist[idx];
+			console.log(m_id);
+			$.ajax({
+				url: 'https://api.meetup.com/2/rsvp/',
+				method: 'POST',
+				data: {
+					'guests' : 0 
+					,'event_id' : e_id
+					,'rsvp' : "yes"
+					,'member_id' : m_id
+					,'access_token' : $('#Token').val()
+				},
+				dataType: "html",
+				success: function (data) {
+					var rsvped = JSON.parse(data);
+					$('#viewEvent').append(rsvped.member.name + ' was added to the "Going" list! <br \>');
+					
+				}
+			});
+			rlist.splice(idx,1);
+		}
+	}
+	});
+
+  }
 	function getEventsByHosted() {
 		var tok=/access_token=([^&]+)/.exec(window.location.hash);
 		$.ajax({
@@ -21,7 +68,6 @@
 					var e_id=event.id;
 					var ename=event.name;
 					var uname=event.urlname;
-					alert("<input id=\"eid_"+e_id+"\" type=\"button\" onclick=\"selectEvent('" + e_id + "','" + uname + "','" + encodeURI(ename) + "')\" value=\"" + ename + "\"><br>");
 					$('#listEvent').append("<input id=\"eid_"+e_id+"\" type=\"button\" onclick=\"selectEvent('" + e_id + "','" + uname + "','" + encodeURI(ename) + "')\" value=\"" + ename + "\"><br>");
 				});
 			},
@@ -30,6 +76,11 @@
 				alert(thrownError);
 			}
 		});
+	}
+	function selectEvent(e_id, uname, ename){
+		$('#e_id').val(e_id);
+		$('#uname').val(uname);
+		$('#eventName').html("You selected the event \""+decodeURI(ename)+"\"");
 	}
 	$(document).ready(getEventsByHosted);
 </script>
@@ -50,7 +101,7 @@
 			<input type="hidden" id="Token"></input>
 
 			<!-- STEP 2 -->
-			<div style="display: none" id="cnt">
+			<div id="cnt">
 				<span class="label">Meetup RSVP Count: </span>
 				<input type="text" id="rcnt"></input>
 				<input type="button" id="rnd" onclick="getRSVPS()" value="Randomize RSVPs">

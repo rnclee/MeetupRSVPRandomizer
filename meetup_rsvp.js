@@ -158,7 +158,7 @@ server.listen(server_port, server_ip_address, function () {
 				}
 				if(err)
 				{
-					console.log(err);
+					console.log("get rsvp list:" + err);
 				}
 			});
 		for (i=0; i < rlim; i++) {
@@ -188,7 +188,7 @@ server.listen(server_port, server_ip_address, function () {
 					}
 					if(err)
 					{
-						console.log(err);
+						console.log("rsvp action:" + err);
 					}
 				});
 			rlist.splice(idx,1);

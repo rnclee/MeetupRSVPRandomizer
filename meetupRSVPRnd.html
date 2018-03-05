@@ -71,7 +71,7 @@
 					var e_id=event.id;
 					var ename=event.name;
 					var uname=event.urlname;
-					$('#listEvent').append("<a class=\"event-link\" id=\"eid_"+e_id+"\" onclick=\"selectEvent('" + e_id + "','" + uname + "')\" >" + HtmlEncode(ename) + "</a><br>");
+					$('#listEvent').append("<a class=\"event-link\" id=\"eid_"+e_id+"\" onclick=\"selectEvent('" + e_id + "','" + uname + "')\" >" + ename + "</a><br>");
 				});
 			},
 			error: function (xhr, ajaxOptions, thrownError) {

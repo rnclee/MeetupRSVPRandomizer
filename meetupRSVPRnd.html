@@ -25,6 +25,10 @@
 					alert("<input id=\"eid_"+e_id+"\" type=\"button\" onclick=\"selectEvent('" + e_id + "','" + uname + "','" + encodeURI(ename) + "')\" value=\"" + ename + "\"><br>");
 					$('#listEvent').append("<input id=\"eid_"+e_id+"\" type=\"button\" onclick=\"selectEvent('" + e_id + "','" + uname + "','" + encodeURI(ename) + "')\" value=\"" + ename + "\"><br>");
 				});
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert(xhr.status);
+				alert(thrownError);
 			}
 		});
 	}

@@ -8,6 +8,9 @@
 </head>
 <body>
 <script>
+	function getRandomInt(max) {
+	  return Math.floor(Math.random() * Math.floor(max));
+	}
 	function getRSVPS() {
 		var e_id = $('#e_id').val();
 		var uname = $('#uname').val();
@@ -68,7 +71,7 @@
 					var e_id=event.id;
 					var ename=event.name;
 					var uname=event.urlname;
-					$('#listEvent').append("<input id=\"eid_"+e_id+"\" type=\"button\" onclick=\"selectEvent('" + e_id + "','" + uname + "','" + encodeURI(ename) + "')\" value=\"" + ename + "\"><br>");
+					$('#listEvent').append("<a class=\"event-link\" id=\"eid_"+e_id+"\" onclick=\"selectEvent('" + e_id + "','" + uname + "')\" >" + HtmlEncode(ename) + "</a><br>");
 				});
 			},
 			error: function (xhr, ajaxOptions, thrownError) {

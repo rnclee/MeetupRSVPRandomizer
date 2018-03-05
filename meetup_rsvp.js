@@ -85,7 +85,7 @@ server.listen(server_port, server_ip_address, function () {
 		var ae = JSON.parse(aedata);
 		res.write('[');
 		var fst=true;
-		ae.forEach(function(event, idx, array) {
+		ae.forEach(function(event, idx, arr) {
 			if (event != null)
 			{
 				var e_id=event.id;
@@ -108,11 +108,11 @@ server.listen(server_port, server_ip_address, function () {
 									', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }');
 							}
 						}
+						if(arr.length-1 === idx) {
+							console.log('success!');
+							res.end(']');
+						}
 					});
-			}
-			if (idx === array.length-1) {
-				console.log('success!');
-				res.end(']');
 			}
 		});
 	}

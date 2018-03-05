@@ -83,8 +83,8 @@ server.listen(server_port, server_ip_address, function () {
 	}
 	function getEventsByHosted(m_id, token, aedata, res) {
 		var ae = JSON.parse(aedata);
-		res.write('[');
 		var fst=true;
+		var eventList = [];
 		ae.forEach(function(event, idx, arr) {
 			if (event != null)
 			{
@@ -103,14 +103,14 @@ server.listen(server_port, server_ip_address, function () {
 									res.write(',');
 								}
 								fst=false;
-								res.write('{'+
+								eventList.push('{'+
 									'id: \''+ e_id + '\'' +
 									', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }');
 							}
 						}
-						if(arr.length-1 === idx) {
+						if(arr.length === eventList.length) {
 							console.log('success!');
-							res.end(']');
+							res.end(JSON.stringify(eventList));
 						}
 					});
 			}

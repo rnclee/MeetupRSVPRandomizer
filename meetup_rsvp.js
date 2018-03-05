@@ -83,7 +83,6 @@ server.listen(server_port, server_ip_address, function () {
 	}
 	function getEventsByHosted(m_id, token, aedata, res) {
 		var ae = JSON.parse(aedata);
-		var fst=true;
 		var eventList = [];
 		var cnt=0;
 		ae.forEach(function(event, idx, arr) {
@@ -100,10 +99,6 @@ server.listen(server_port, server_ip_address, function () {
 						{
 							if(isEventHost(m_id, data))
 							{
-								if (!fst) {
-									res.write(',');
-								}
-								fst=false;
 								eventList.push('{'+
 									'id: \''+ e_id + '\'' +
 									', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }');

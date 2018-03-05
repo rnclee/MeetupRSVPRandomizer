@@ -103,14 +103,16 @@ server.listen(server_port, server_ip_address, function () {
 									res.write(',');
 								}
 								fst=false;
-								eventList.push('{'+
+								this.eventList.push('{'+
 									'id: \''+ e_id + '\'' +
 									', event: { group : { urlname : \'' + uname + '\'}, name : \''+ HtmlEncode(ename) + '\'} }');
 							}
 						}
-						if(arr.length === eventList.length) {
-							console.log('success!');
-							res.end(JSON.stringify(eventList));
+						console.log("local: " +eventList.length);
+						console.log("this: " + this.eventList.length);
+						if(arr.length === this.eventList.length) {
+							console.log(JSON.stringify(this.eventList));
+							res.end(JSON.stringify(this.eventList));
 						}
 					});
 			}

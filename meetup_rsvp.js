@@ -165,11 +165,11 @@ server.listen(server_port, server_ip_address, function () {
 			var idx = getRandomInt(rlist.length);
 			var m_id=rlist[idx];
 			request({
-					uri: 'https://api.meetup.com/2/rsvp/'+e_id,
+					uri: 'https://api.meetup.com/2/rsvp/',
 					method: 'POST',
 					data: {
 						'guests' : 0 
-						//,'event_id' : e_id
+						,'event_id' : e_id
 						,'rsvp' : "yes"
 						,'member_id' : m_id
 						,'access_token' : token
@@ -180,12 +180,7 @@ server.listen(server_port, server_ip_address, function () {
 						res.end('reload');
 					}
 					var rsvped = JSON.parse(rsvpedList);
-					console.log({
-						'guests' : 0 
-						,'rsvp' : "yes"
-						,'member_id' : m_id
-						,'access_token' : token
-					});
+					console.log(rsvpedList);
 					memList.push(rsvped.member.name);
 					if(i === rlim-1) {
 						res.end(JSON.stringify(memList));

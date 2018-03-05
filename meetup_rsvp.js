@@ -109,7 +109,7 @@ server.listen(server_port, server_ip_address, function () {
 							}
 						}
 						console.log("local: " +eventList.length+","+arr.length);
-						console.log(JSON.stringify(eventList);
+						console.log(JSON.stringify(eventList));
 						if(arr.length === eventList.length) {
 							res.end(JSON.stringify(eventList));
 						}

@@ -61,10 +61,11 @@
 	{
 	      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/\[/g, '&#91;').replace(/\]/g, '&#93;').replace(/!/g, '&#33;');
 	}
-	function selectEvent(e_id, uname, ename){
+	function selectEvent(e_id, uname){
 		$('#e_id').val(e_id);
 		$('#uname').val(uname);
-		$('#eventName').html("You selected the event \""+decodeURI(ename)+"\"");
+		$('#eventName').html("You have selected "+$('#eid_'+e_id).html());
+		$('#viewEvent').empty();
 	}
 	$(document).ready(getEventsByHosted);
 </script>

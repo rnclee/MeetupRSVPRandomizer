@@ -2,8 +2,7 @@ var http = require('http'),
     request = require('request'),
 	fs = require('fs'),
 	qs = require('querystring'),
-	path = require('path'),
-	async = require('async');
+	path = require('path');
 
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0'
@@ -86,7 +85,7 @@ server.listen(server_port, server_ip_address, function () {
 		var ae = JSON.parse(aedata);
 		res.write('[');
 		var fst=true;
-		ae.forEach(function(event) {
+		ae.forEach(function(event, idx, array) {
 			if (event != null)
 			{
 				var e_id=event.id;
@@ -111,14 +110,10 @@ server.listen(server_port, server_ip_address, function () {
 						}
 					});
 			}
-		});
-		async.parallel(calls, function(err, result) {
-			/* this code will run after all calls finished the job or
-			   when any of the calls passes an error */
-			if (err)
-				return console.log(err);
-			console.log('success!');
-			res.end(']');
+			if (idx === array.length-1) {
+				console.log('success!');
+				res.end(']');
+			}
 		});
 	}
 	function isEventHost(m_id, hdata) {

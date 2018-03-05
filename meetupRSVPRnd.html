@@ -14,7 +14,7 @@
 			url: "./getEvents",
 			method: 'POST',
 			data: { token : tok[1] },
-			dataType: "text/html",
+			dataType: 'json',
 			success: function (events) {
 				var ae = JSON.parse(events);
 				console.log(ae);

@@ -101,10 +101,8 @@ server.listen(server_port, server_ip_address, function () {
 							{
 								eventList.push({
 									id: e_id 
-									, event: { 
-												group : { urlname : uname }
-												, name : HtmlEncode(ename) 
-											}
+									, urlname : uname
+									, name : HtmlEncode(ename) 
 								});
 							}
 						}

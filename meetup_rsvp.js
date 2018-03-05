@@ -174,6 +174,8 @@ server.listen(server_port, server_ip_address, function () {
 					}
 				}, function(err, response, rsvpedList) {
 					var rsvped = JSON.parse(rsvpedList);
+					console.log(rsvpedList);
+					console.log(rsvped);
 					memList.push(rsvped.member.name);
 					if(i === rlim-1) {
 						res.end(JSON.stringify(memList));

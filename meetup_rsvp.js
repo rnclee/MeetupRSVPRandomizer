@@ -46,7 +46,6 @@ var server = http.createServer(function(req, res) {
 		});
 		req.on('end', function () {
 			var data = qs.parse(body);
-			res.writeHead(200, {'Content-Type': 'text/html'});
 			submitRSVPS(data.e_id,data.uname,data.rlim,data.token,res);
 		});
   } else {
@@ -161,7 +160,6 @@ server.listen(server_port, server_ip_address, function () {
 		for (i=0; i < rlim; i++) {
 			var idx = getRandomInt(rlist.length);
 			var m_id=rlist[idx];
-			console.log(m_id);
 			request({
 					uri: 'https://api.meetup.com/2/rsvp/',
 					method: 'POST',
@@ -173,6 +171,10 @@ server.listen(server_port, server_ip_address, function () {
 						,'access_token' : token
 					}
 				}, function(err, response, rsvpedList) {
+					res.writeHead(response.statusCode, {'Content-Type': 'text/html'});
+					if (error && response.statusCode == 405) {
+						res.end('reload');
+					}
 					var rsvped = JSON.parse(rsvpedList);
 					console.log(rsvpedList);
 					console.log(rsvped);

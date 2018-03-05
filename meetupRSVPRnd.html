@@ -12,26 +12,30 @@
 		var e_id = $('#e_id').val();
 		var uname = $('#uname').val();
 		var tok=/access_token=([^&]+)/.exec(window.location.hash);
-	var rlim=$('#rcnt').val();
-	$.ajax({
-		url: "./randomize",
-		method: 'POST',
-		data: { 'e_id' : e_id
-			,'uname' : uname
-			,'rlim' : rlim
-			,'token' : tok[1] 
-		},
-		dataType: "html",
-		success: function (members) {
-			var mem = JSON.parse(members);
-			var rlist = [];
-			mem.forEach(function (rsvp) {
-				$('#viewEvent').append(rsvped.member.name + ' was added to the "Going" list! <br \>');
-			});
-		}
-	});
-
-  }
+		var rlim=$('#rcnt').val();
+		$.ajax({
+			url: "./randomize",
+			method: 'POST',
+			data: { 'e_id' : e_id
+				,'uname' : uname
+				,'rlim' : rlim
+				,'token' : tok[1] 
+			},
+			dataType: "html",
+			success: function (members) {
+					var mem = JSON.parse(members);
+					var rlist = [];
+					mem.forEach(function (rsvp) {
+						$('#viewEvent').append(rsvped.member.name + ' was added to the "Going" list! <br \>');
+					});
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				if(xhr.status=405) {
+					window.location.replace('./login');
+				}
+			  }
+		});
+	}
 	function getEventsByHosted() {
 		var tok=/access_token=([^&]+)/.exec(window.location.hash);
 		$.ajax({

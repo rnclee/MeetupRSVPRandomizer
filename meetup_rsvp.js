@@ -145,6 +145,7 @@ server.listen(server_port, server_ip_address, function () {
 	var rurl = "http://api.meetup.com/"+uname+"/events/"+e_id+"/rsvps";
 	var eurl = "http://api.meetup.com/"+uname+"/events/"+e_id;
 	var memList = [];
+	console.log(token);
 	request({
 		uri: rurl + "?response=yes&only=member%2Cresponse",
 		method: 'GET'

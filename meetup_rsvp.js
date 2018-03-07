@@ -168,7 +168,7 @@ server.listen(server_port, server_ip_address, function () {
 					uri: 'https://api.meetup.com/2/rsvp/',
 					method: 'POST',
 					headers: { "Authorization" : "Bearer "+token },
-					postData: {
+					form: {
 						'guests' : 0
 						,'event_id' : e_id
 						,'rsvp' : 'yes'

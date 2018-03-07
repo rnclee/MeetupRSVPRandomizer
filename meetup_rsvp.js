@@ -167,12 +167,13 @@ server.listen(server_port, server_ip_address, function () {
 			request({
 					uri: 'https://api.meetup.com/2/rsvp/',
 					method: 'POST',
-					headers: { "Authorization" : "Bearer "+token },
-					data: {
+					//headers: { "Authorization" : "Bearer "+token },
+					postData: {
 						'guests' : 0
 						,'event_id' : e_id
 						,'rsvp' : 'yes'
 						,'member_id' : m_id
+						,'access_token' : token
 					}
 				}, function(err, response, rsvpedList) {
 					res.writeHead(response.statusCode, {'Content-Type': 'text/html'});

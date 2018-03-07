@@ -173,7 +173,6 @@ server.listen(server_port, server_ip_address, function () {
 						,'event_id' : e_id
 						,'rsvp' : "yes"
 						,'member_id' : m_id
-						,'access_token' : token
 					}
 				}, function(err, response, rsvpedList) {
 					console.log(JSON.stringify({

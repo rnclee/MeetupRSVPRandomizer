@@ -181,7 +181,9 @@ server.listen(server_port, server_ip_address, function () {
 					}
 					var rsvped = JSON.parse(rsvpedList);
 					memList.push(rsvped.member.name);
+					console.log(i+' === '+rlim);
 					if(i === rlim) {
+						console.log(JSON.stringify(memList));
 						res.end(JSON.stringify(memList));
 					}
 					if(err)

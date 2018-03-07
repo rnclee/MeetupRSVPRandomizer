@@ -165,29 +165,24 @@ server.listen(server_port, server_ip_address, function () {
 			var idx = getRandomInt(rlist.length);
 			var m_id=rlist[idx];
 			request({
-					uri: 'https://api.meetup.com/2/rsvp',
+					uri: 'https://api.meetup.com/2/rsvp/',
 					method: 'POST',
 					headers: { "Authorization" : "Bearer "+token },
 					data: {
-						'guests' : 0 
+						'guests' : 0
 						,'event_id' : e_id
-						,'rsvp' : "yes"
+						,'rsvp' : 'yes'
 						,'member_id' : m_id
 					}
 				}, function(err, response, rsvpedList) {
-					console.log(JSON.stringify({
-						'guests' : 0 
-						,'event_id' : e_id
-						,'rsvp' : "yes"
-						,'member_id' : m_id
-						,'access_token' : token
-					}));
 					res.writeHead(response.statusCode, {'Content-Type': 'text/html'});
 					if (err && response.statusCode == 405) {
 						res.end('reload');
 					}
 					var rsvped = JSON.parse(rsvpedList);
-					console.log(rsvpedList);
+					console.log('rsvpedList: '+rsvpedList);
+					console.log('response: '+response);
+					console.log('err: '+err);
 					memList.push(rsvped.member.name);
 					if(i === rlim-1) {
 						res.end(JSON.stringify(memList));

@@ -180,10 +180,8 @@ server.listen(server_port, server_ip_address, function () {
 						res.end('reload');
 					}
 					var rsvped = JSON.parse(rsvpedList);
-					console.log('rsvpedList: '+rsvpedList);
-					console.log('response: '+JSON.stringify(response));
-					console.log('err: '+err);
 					memList.push(rsvped.member.name);
+					console.log(i+'==='+(rlim-1));
 					if(i === rlim-1) {
 						res.end(JSON.stringify(memList));
 					}

@@ -29,6 +29,7 @@
 				mem.forEach(function (rsvp) {
 					$('#viewEvent').append(rsvp.name + ' was added to the "Going" list! <br \>');
 				});
+				refreshMeetupView(e_id, uname);
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
 				if(xhr.status === 405) {
@@ -52,7 +53,6 @@
 					var uname=event.urlname;
 					$('#listEvent').append("<a class=\"event-link\" id=\"eid_"+e_id+"\" onclick=\"selectEvent('" + e_id + "','" + uname + "')\" >" + ename + "</a><br>");
 				});
-				refreshMeetupView(e_id, uname);
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
 				console.log(xhr.status);

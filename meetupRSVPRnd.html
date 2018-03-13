@@ -52,6 +52,7 @@
 					var uname=event.urlname;
 					$('#listEvent').append("<a class=\"event-link\" id=\"eid_"+e_id+"\" onclick=\"selectEvent('" + e_id + "','" + uname + "')\" >" + ename + "</a><br>");
 				});
+				refreshMeetupView(e_id, uname);
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
 				console.log(xhr.status);
@@ -68,7 +69,6 @@
 		$('#uname').val(uname);
 		$('#eventName').html("You have selected "+$('#eid_'+e_id).html());
 		$('#viewEvent').empty();
-		refreshMeetupView(e_id, uname);
 	}
 	function refreshMeetupView(e_id, uname)
 	{

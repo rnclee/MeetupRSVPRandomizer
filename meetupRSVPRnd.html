@@ -23,12 +23,13 @@
 			},
 			dataType: "html",
 			success: function (members) {
-					var mem = JSON.parse(members);
-					var rlist = [];
-					$('#viewEvent').empty();
-					mem.forEach(function (rsvp) {
-						$('#viewEvent').append(rsvp.name + ' was added to the "Going" list! <br \>');
-					});
+				var mem = JSON.parse(members);
+				var rlist = [];
+				$('#viewEvent').empty();
+				mem.forEach(function (rsvp) {
+					$('#viewEvent').append(rsvp.name + ' was added to the "Going" list! <br \>');
+				});
+				refreshMeetupView(e_id, uname);
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
 				if(xhr.status === 405) {
@@ -68,7 +69,12 @@
 		$('#uname').val(uname);
 		$('#eventName').html("You have selected "+$('#eid_'+e_id).html());
 		$('#viewEvent').empty();
+		refreshMeetupView(e_id, uname);
 	}
+	function refreshMeetupView(e_id, uname)
+	{
+		$('#muEvent').attr('src', 'https://www.meetup.com/'+uname+'/events/'+e_id+'/');
+	}	
 	$(document).ready(getEventsByHosted);
 </script>
 <div class="container">
@@ -96,6 +102,9 @@
 
 			<div id="viewEvent">
 			</div>
+			<iframe id='muEvent'>
+				
+			</iframe>
 		</div>
 	</div>
 </div>

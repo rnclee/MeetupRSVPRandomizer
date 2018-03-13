@@ -29,7 +29,6 @@
 				mem.forEach(function (rsvp) {
 					$('#viewEvent').append(rsvp.name + ' was added to the "Going" list! <br \>');
 				});
-				refreshMeetupView(e_id, uname);
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
 				if(xhr.status === 405) {
@@ -73,7 +72,14 @@
 	}
 	function refreshMeetupView(e_id, uname)
 	{
-		$('#muEvent').attr('src', 'https://www.meetup.com/'+uname+'/events/'+e_id+'/');
+		var win = window.open('https://www.meetup.com/'+uname+'/events/'+e_id+'/', '_blank');
+		if (win) {
+			//Browser has allowed it to be opened
+			win.focus();
+		} else {
+			//Browser has blocked it
+			alert('Please allow popups for this website');
+		}
 	}	
 	$(document).ready(getEventsByHosted);
 </script>
@@ -102,10 +108,6 @@
 
 			<div id="viewEvent">
 			</div>
-			<br />
-			<iframe id='muEvent' width="430" height="200">
-				
-			</iframe>
 		</div>
 	</div>
 </div>
